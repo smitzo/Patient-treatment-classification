@@ -8,13 +8,10 @@ patient_classification.ipynb: Jupyter notebook containing the code for data prep
 dataset.csv: Dataset containing the blood report data used for training and testing the machine learning model.
 
 **Getting Started:**
-Clone the Repository: Clone this repository to your local machine using the following command:
-bash
-Copy code
-git clone https://github.com/smitzo/patient_treatment_classification.git
-Open the Notebook: Open the patient_classification.ipynb notebook using Jupyter Notebook or JupyterLab.
-Run the Notebook: Execute each cell in the notebook sequentially to preprocess the data, train the machine learning model, and evaluate its performance.
-Explore the Dataset: Take a look at the dataset.csv file to understand the structure of the data and the features available.
+Clone the Repository: Clone this repository to your local machine using the following command:>
+git clone https://github.com/smitzo/patient_treatment_classification.git>
+
+Run the Notebook: Execute each cell in the notebook sequentially to preprocess the data, train the machine learning model, and evaluate its performance.>
 
 **Dependencies:**
 Python 3.x
