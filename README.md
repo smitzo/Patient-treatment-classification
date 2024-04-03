@@ -1,6 +1,6 @@
 **Patient Classification Based on Blood Report:**
 
-**Overview:**
+*Overview:*
 -This project involves classifying patients into incare and outcare based on their blood report data. The classification is performed using a machine learning model trained on a dataset containing blood report features.
 
 **Dependencies:**
@@ -29,8 +29,8 @@
 - Conclusion
 
 ## Dataset Information:
-- Size of training set: 10683 records
-- Size of test set: 2671 records
+- Size of training set: 3089 records
+- Size of test set: 1323 records
 - Link of the dataset:- https://www.kaggle.com/datasets/saurabhshahane/patient-treatment-classification?select=data-ori.csv
 
 ## Machine Learning Algorithm used:
@@ -39,4 +39,4 @@
 
 ## Conclusion:
 Random Forest Regressor gives best accuracy
-Accuracy:80%
+Accuracy:75%
