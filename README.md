@@ -3,15 +3,6 @@
 **Overview:**
 -This project involves classifying patients into incare and outcare based on their blood report data. The classification is performed using a machine learning model trained on a dataset containing blood report features.
 
-**Project Structure:**
--patient_classification.ipynb: Jupyter notebook containing the code for data preprocessing, model training, and evaluation.
--dataset.csv: Dataset containing the blood report data used for training and testing the machine learning model.
-
-**Getting Started:**
--Clone the Repository: Clone this repository to your local machine using the following command:>
--git clone https://github.com/smitzo/patient_treatment_classification.git>
--Run the Notebook: Execute each cell in the notebook sequentially to preprocess the data, train the machine learning model, and evaluate its performance.>
-
 **Dependencies:**
 -Python 3.x
 -Jupyter Notebook or JupyterLab
@@ -20,3 +11,32 @@
 **Models Used:**
 -Logistic Regression
 -Random Forest
+
+# Ml_project
+ Patient Treatment Classification
+
+## Keypoints
+- Importing Libraries
+- Loading the dataset
+- Data Inspection
+- Exploratory Data Analysis (EDA)
+- Feature Engineering
+- Checking for null values
+- Using Encoding to Handle categorical data
+- Feature Selection
+- Building Machine Learning models
+- Hyperparameter Tuning
+- Conclusion
+
+## Dataset Information:
+- Size of training set: 10683 records
+- Size of test set: 2671 records
+- Link of the dataset:- https://www.kaggle.com/datasets/saurabhshahane/patient-treatment-classification?select=data-ori.csv
+
+## Machine Learning Algorithm used:
+- Logistic regression
+- Random Forest Regressor
+
+## Conclusion:
+Random Forest Regressor gives best accuracy
+Accuracy:80%
