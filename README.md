@@ -1,5 +1,5 @@
 
-# Ml_project
+# ML project
  Patient Treatment Classification
  -This project involves classifying patients into incare and outcare based on their blood report data. The classification is performed using a machine learning model trained on a dataset containing blood report features.
 
