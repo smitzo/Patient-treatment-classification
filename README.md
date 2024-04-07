@@ -1,13 +1,3 @@
-**Patient Classification Based on Blood Report:**
-
-**Dependencies:**
--Python 3.x
--Jupyter Notebook or JupyterLab
--Required Python packages are listed in the requirements.txt file.
-
-**Models Used:**
--Logistic Regression
--Random Forest
 
 # Ml_project
  Patient Treatment Classification
@@ -25,6 +15,11 @@
 - Building Machine Learning models
 - Hyperparameter Tuning
 - Conclusion
+
+## Dependencies
+- Python 3.x
+- Jupyter Notebook or JupyterLab
+- Required Python packages are listed in the requirements.txt file.
 
 ## Dataset Information:
 - Size of training set: 3089 records
