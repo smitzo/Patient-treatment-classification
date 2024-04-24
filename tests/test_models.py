@@ -18,3 +18,10 @@ def test_forest_is_seeded_and_bounded():
     assert model.named_steps["model"].n_jobs == 1
     model.fit(data.X.iloc[:200], data.y.iloc[:200])
     assert len(model.predict(data.X.iloc[:5])) == 5
+
+
+def test_dummy_predicts_training_majority_only():
+    data = load_patient()
+    split = holdout(data)
+    model = build_pipeline(data.spec, "dummy").fit(split.X_train, split.y_train)
+    assert set(model.predict(split.X_test)) == {split.y_train.mode()[0]}

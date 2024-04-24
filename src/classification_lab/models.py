@@ -18,3 +18,25 @@ def build_pipeline(spec, model: str = "logistic", seed: int = 42):
     if model not in factories:
         raise ValueError(f"Unknown model {model!r}")
     return Pipeline([("preprocess", tabular_preprocessor(spec)), ("model", factories[model]())])
+
+
+# A baseline uses the same preprocessing and split contract as learned models.
+def build_dummy_pipeline(spec, seed: int = 42):
+    from sklearn.dummy import DummyClassifier
+
+    return Pipeline(
+        [
+            ("preprocess", tabular_preprocessor(spec)),
+            ("model", DummyClassifier(strategy="most_frequent", random_state=seed)),
+        ]
+    )
+
+
+MODEL_NAMES.append("dummy")
+_original_build_pipeline = build_pipeline
+
+
+def build_pipeline(spec, model: str = "logistic", seed: int = 42):
+    if model == "dummy":
+        return build_dummy_pipeline(spec, seed)
+    return _original_build_pipeline(spec, model, seed)
