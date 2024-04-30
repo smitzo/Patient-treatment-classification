@@ -1,5 +1,6 @@
 """Adapters for small datasets distributed with scikit-learn."""
 
+from sklearn.datasets import load_wine
 from sklearn.datasets import load_iris
 from .data import DatasetBundle, DatasetSpec
 from .quality import validate_bundle
@@ -22,3 +23,7 @@ def from_bunch(name, bunch):
 
 def iris():
     return from_bunch("iris", load_iris(as_frame=True))
+
+
+def wine():
+    return from_bunch("wine", load_wine(as_frame=True))

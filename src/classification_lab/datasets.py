@@ -1,5 +1,6 @@
 """Offline dataset registry. Patient data stays in the original repository CSV."""
 
+from .benchmarks import wine
 from .benchmarks import iris
 from pathlib import Path
 from .data import DatasetSpec
@@ -46,3 +47,6 @@ def load_dataset(name: str, **kwargs):
 
 
 LOADERS["iris"] = iris
+
+
+LOADERS["wine"] = wine
