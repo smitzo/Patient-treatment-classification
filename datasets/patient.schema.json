@@ -1,0 +1,9 @@
+{
+  "name": "patient",
+  "file": "patient_data.csv",
+  "rows": 4412,
+  "target": {"name": "SOURCE", "labels": ["in", "out"]},
+  "numeric_features": ["HAEMATOCRIT", "HAEMOGLOBINS", "ERYTHROCYTE", "LEUCOCYTE", "THROMBOCYTE", "MCH", "MCHC", "MCV", "AGE"],
+  "categorical_features": {"SEX": ["F", "M"]},
+  "license_status": "upstream redistribution rights unverified"
+}
