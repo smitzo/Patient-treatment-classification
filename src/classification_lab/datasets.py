@@ -1,9 +1,11 @@
 """Offline dataset registry. Patient data stays in the original repository CSV."""
 
+from .benchmarks import iris
 from pathlib import Path
 from .data import DatasetSpec
 from .csv_io import load_csv
 from .quality import validate_bundle
+
 
 PATIENT = DatasetSpec(
     "patient",
@@ -41,3 +43,6 @@ def load_dataset(name: str, **kwargs):
     if name not in LOADERS:
         raise ValueError(f"Unknown dataset {name!r}; choose from {sorted(LOADERS)}")
     return LOADERS[name](**kwargs)
+
+
+LOADERS["iris"] = iris
