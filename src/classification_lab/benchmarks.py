@@ -1,5 +1,6 @@
 """Adapters for small datasets distributed with scikit-learn."""
 
+from sklearn.datasets import load_breast_cancer
 from sklearn.datasets import load_wine
 from sklearn.datasets import load_iris
 from .data import DatasetBundle, DatasetSpec
@@ -27,3 +28,7 @@ def iris():
 
 def wine():
     return from_bunch("wine", load_wine(as_frame=True))
+
+
+def breast_cancer():
+    return from_bunch("breast_cancer", load_breast_cancer(as_frame=True))

@@ -1,5 +1,6 @@
 """Offline dataset registry. Patient data stays in the original repository CSV."""
 
+from .benchmarks import breast_cancer
 from .benchmarks import wine
 from .benchmarks import iris
 from pathlib import Path
@@ -50,3 +51,6 @@ LOADERS["iris"] = iris
 
 
 LOADERS["wine"] = wine
+
+
+LOADERS["breast_cancer"] = breast_cancer
