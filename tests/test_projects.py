@@ -23,3 +23,12 @@ def test_cancer_study_names_positive_class_explicitly():
     assert result["positive_class"] == "malignant"
     assert 0 <= result["sensitivity"] <= 1
     assert result["false_negatives"] >= 0
+
+
+def test_digit_confusions_match_offdiagonal_errors():
+    from classification_lab.projects import digit_error_study
+
+    result = digit_error_study()
+    matrix = result["report"]["metrics"]["confusion_matrix"]
+    errors = sum(map(sum, matrix)) - sum(matrix[i][i] for i in range(10))
+    assert sum(pair["count"] for pair in result["confusions"]) == errors

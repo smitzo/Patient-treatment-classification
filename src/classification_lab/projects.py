@@ -53,3 +53,20 @@ def cancer_detection_study(seed=42):
         "report": result.report,
         "scope": "educational benchmark, not clinical validation",
     }
+
+
+def digit_error_study(seed=42):
+    from collections import Counter
+
+    result = train(load_dataset("digits"), seed=seed)
+    pairs = Counter(
+        (str(a), str(b))
+        for a, b in zip(result.split.y_test, result.estimator.predict(result.split.X_test))
+        if a != b
+    )
+    return {
+        "report": result.report,
+        "confusions": [
+            {"actual": a, "predicted": b, "count": count} for (a, b), count in pairs.most_common()
+        ],
+    }
