@@ -35,3 +35,21 @@ def wine_scaling_study(seed=42):
             split.y_test, pipeline.predict(split.X_test), pipeline.classes_
         )
     return reports
+
+
+def cancer_detection_study(seed=42):
+    """Descriptive benchmark only; no clinical validity is established."""
+    from sklearn.metrics import confusion_matrix
+
+    result = train(load_dataset("breast_cancer"), seed=seed)
+    truth = result.split.y_test == "malignant"
+    predicted = result.estimator.predict(result.split.X_test) == "malignant"
+    tn, fp, fn, tp = confusion_matrix(truth, predicted, labels=[False, True]).ravel()
+    return {
+        "positive_class": "malignant",
+        "sensitivity": float(tp / (tp + fn)),
+        "specificity": float(tn / (tn + fp)),
+        "false_negatives": int(fn),
+        "report": result.report,
+        "scope": "educational benchmark, not clinical validation",
+    }

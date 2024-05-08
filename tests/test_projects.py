@@ -14,3 +14,12 @@ def test_wine_scaling_study_reports_both_models():
     reports = wine_scaling_study()
     assert set(reports) == {"scaled", "unscaled"}
     assert reports["scaled"]["classes"] == reports["unscaled"]["classes"]
+
+
+def test_cancer_study_names_positive_class_explicitly():
+    from classification_lab.projects import cancer_detection_study
+
+    result = cancer_detection_study()
+    assert result["positive_class"] == "malignant"
+    assert 0 <= result["sensitivity"] <= 1
+    assert result["false_negatives"] >= 0

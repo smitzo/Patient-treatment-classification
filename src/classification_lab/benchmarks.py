@@ -14,7 +14,7 @@ def from_bunch(name, bunch):
     spec = DatasetSpec(
         name,
         "label",
-        numeric=tuple(bunch.feature_names),
+        numeric=tuple(map(str, bunch.feature_names)),
         source=f"scikit-learn bundled {name}; see upstream dataset description",
     )
     bundle = DatasetBundle(frame, spec)
