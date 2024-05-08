@@ -17,3 +17,9 @@ def test_breast_cancer_preserves_named_outcomes():
     data = load_dataset("breast_cancer")
     assert data.X.shape == (569, 30)
     assert set(data.y) == {"malignant", "benign"}
+
+
+def test_digits_retain_64_pixels_and_ten_classes():
+    data = load_dataset("digits")
+    assert data.X.shape == (1797, 64)
+    assert set(data.y) == set("0123456789")

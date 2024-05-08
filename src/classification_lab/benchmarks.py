@@ -1,5 +1,6 @@
 """Adapters for small datasets distributed with scikit-learn."""
 
+from sklearn.datasets import load_digits
 from sklearn.datasets import load_breast_cancer
 from sklearn.datasets import load_wine
 from sklearn.datasets import load_iris
@@ -32,3 +33,7 @@ def wine():
 
 def breast_cancer():
     return from_bunch("breast_cancer", load_breast_cancer(as_frame=True))
+
+
+def digits():
+    return from_bunch("digits", load_digits(as_frame=True))

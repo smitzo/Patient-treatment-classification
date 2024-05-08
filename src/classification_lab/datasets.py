@@ -1,5 +1,6 @@
 """Offline dataset registry. Patient data stays in the original repository CSV."""
 
+from .benchmarks import digits
 from .benchmarks import breast_cancer
 from .benchmarks import wine
 from .benchmarks import iris
@@ -54,3 +55,6 @@ LOADERS["wine"] = wine
 
 
 LOADERS["breast_cancer"] = breast_cancer
+
+
+LOADERS["digits"] = digits
