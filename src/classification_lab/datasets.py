@@ -8,6 +8,7 @@ from pathlib import Path
 from .data import DatasetSpec
 from .csv_io import load_csv
 from .quality import validate_bundle
+from .resource_data import load_resource
 
 
 PATIENT = DatasetSpec(
@@ -58,3 +59,6 @@ LOADERS["breast_cancer"] = breast_cancer
 
 
 LOADERS["digits"] = digits
+
+
+LOADERS["churn"] = lambda: load_resource("churn")

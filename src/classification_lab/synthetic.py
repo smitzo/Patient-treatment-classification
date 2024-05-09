@@ -44,3 +44,25 @@ def generate(name, rows=600, seed=42):
     if name not in GENERATORS:
         raise ValueError(f"Unknown generator {name!r}")
     return GENERATORS[name](rows, seed)
+
+
+def churn(rows=600, seed=42):
+    validate_size(rows)
+    rng = np.random.default_rng(seed)
+    tenure = rng.integers(1, 73, rows)
+    cost = rng.uniform(20, 130, rows).round(2)
+    calls = rng.poisson(2, rows)
+    contract = rng.choice(["monthly", "annual"], rows)
+    score = -1.5 - tenure / 35 + cost / 90 + calls / 3 + (contract == "monthly") * 0.7
+    return pd.DataFrame(
+        {
+            "tenure_months": tenure,
+            "monthly_cost": cost,
+            "support_calls": calls,
+            "contract": contract,
+            "label": draw_labels(rng, score, "churn", "stay"),
+        }
+    )
+
+
+GENERATORS["churn"] = churn

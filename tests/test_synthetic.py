@@ -13,3 +13,10 @@ def test_generic_generation_is_repeatable_and_seed_sensitive():
 def test_too_small_generation_rejected():
     with pytest.raises(ValueError):
         generic_tabular(rows=3)
+
+
+def test_churn_snapshot_matches_generator():
+    from classification_lab.datasets import load_dataset
+    from classification_lab.synthetic import generate
+
+    pd.testing.assert_frame_equal(load_dataset("churn").frame, generate("churn"))
