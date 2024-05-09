@@ -94,3 +94,7 @@ def category_error_study(dataset, column, seed=42):
 
 def churn_contract_study(seed=42):
     return category_error_study("churn", "contract", seed)
+
+
+def equipment_type_study(seed=42):
+    return category_error_study("equipment", "machine_type", seed)

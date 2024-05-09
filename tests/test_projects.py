@@ -39,3 +39,11 @@ def test_churn_contract_support_covers_holdout():
 
     result = churn_contract_study()
     assert sum(g["support"] for g in result["breakdown"].values()) == result["report"]["test_rows"]
+
+
+def test_equipment_breakdown_names_all_machine_types():
+    from classification_lab.projects import equipment_type_study
+
+    result = equipment_type_study()
+    assert set(result["breakdown"]) == {"pump", "compressor", "motor"}
+    assert sum(g["support"] for g in result["breakdown"].values()) == 150
