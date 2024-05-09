@@ -20,3 +20,10 @@ def test_churn_snapshot_matches_generator():
     from classification_lab.synthetic import generate
 
     pd.testing.assert_frame_equal(load_dataset("churn").frame, generate("churn"))
+
+
+def test_equipment_snapshot_matches_generator():
+    from classification_lab.datasets import load_dataset
+    from classification_lab.synthetic import generate
+
+    pd.testing.assert_frame_equal(load_dataset("equipment").frame, generate("equipment"))

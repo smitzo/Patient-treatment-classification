@@ -66,3 +66,27 @@ def churn(rows=600, seed=42):
 
 
 GENERATORS["churn"] = churn
+
+
+def equipment(rows=600, seed=42):
+    validate_size(rows)
+    rng = np.random.default_rng(seed)
+    vibration = rng.gamma(2, 1.2, rows).round(3)
+    temperature = rng.normal(65, 12, rows).round(2)
+    load = rng.uniform(20, 100, rows).round(2)
+    hours = rng.integers(10, 10000, rows)
+    machine = rng.choice(["pump", "compressor", "motor"], rows)
+    score = -5 + vibration * 0.6 + (temperature - 50) / 15 + load / 120 + hours / 8000
+    return pd.DataFrame(
+        {
+            "vibration": vibration,
+            "temperature": temperature,
+            "load_percent": load,
+            "operating_hours": hours,
+            "machine_type": machine,
+            "label": draw_labels(rng, score, "failure", "normal"),
+        }
+    )
+
+
+GENERATORS["equipment"] = equipment

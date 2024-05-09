@@ -26,3 +26,11 @@ RESOURCE_SPECS["churn"] = DatasetSpec(
     ("contract",),
     source="Synthetic logistic generator; seed 42; 600 rows",
 )
+
+RESOURCE_SPECS["equipment"] = DatasetSpec(
+    "equipment",
+    "label",
+    ("vibration", "temperature", "load_percent", "operating_hours"),
+    ("machine_type",),
+    source="Synthetic failure generator; seed 42; 600 rows",
+)
