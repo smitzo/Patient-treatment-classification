@@ -32,3 +32,10 @@ def test_digit_confusions_match_offdiagonal_errors():
     matrix = result["report"]["metrics"]["confusion_matrix"]
     errors = sum(map(sum, matrix)) - sum(matrix[i][i] for i in range(10))
     assert sum(pair["count"] for pair in result["confusions"]) == errors
+
+
+def test_churn_contract_support_covers_holdout():
+    from classification_lab.projects import churn_contract_study
+
+    result = churn_contract_study()
+    assert sum(g["support"] for g in result["breakdown"].values()) == result["report"]["test_rows"]

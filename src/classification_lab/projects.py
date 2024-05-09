@@ -70,3 +70,27 @@ def digit_error_study(seed=42):
             {"actual": a, "predicted": b, "count": count} for (a, b), count in pairs.most_common()
         ],
     }
+
+
+def category_error_study(dataset, column, seed=42):
+    data = load_dataset(dataset)
+    if column not in data.spec.categorical:
+        raise ValueError("Breakdown must use a categorical predictor")
+    result = train(data, seed=seed)
+    predicted = result.estimator.predict(result.split.X_test)
+    correct = result.split.y_test.to_numpy() == predicted
+    groups = result.split.X_test[column]
+    return {
+        "report": result.report,
+        "breakdown": {
+            str(group): {
+                "support": int((groups == group).sum()),
+                "accuracy": float(correct[(groups == group).to_numpy()].mean()),
+            }
+            for group in sorted(groups.unique())
+        },
+    }
+
+
+def churn_contract_study(seed=42):
+    return category_error_study("churn", "contract", seed)
