@@ -47,3 +47,12 @@ def test_equipment_breakdown_names_all_machine_types():
     result = equipment_type_study()
     assert set(result["breakdown"]) == {"pump", "compressor", "motor"}
     assert sum(g["support"] for g in result["breakdown"].values()) == 150
+
+
+def test_transaction_study_uses_anomaly_probability_column():
+    from classification_lab.projects import transaction_detection_study
+
+    result = transaction_detection_study()
+    assert result["positive_class"] == "anomaly"
+    assert 0 < result["prevalence"] < 0.4
+    assert 0 <= result["average_precision"] <= 1

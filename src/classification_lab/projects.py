@@ -98,3 +98,21 @@ def churn_contract_study(seed=42):
 
 def equipment_type_study(seed=42):
     return category_error_study("equipment", "machine_type", seed)
+
+
+def transaction_detection_study(seed=42):
+    from sklearn.metrics import average_precision_score, precision_score, recall_score
+
+    result = train(load_dataset("transactions"), seed=seed)
+    truth = result.split.y_test == "anomaly"
+    predicted = result.estimator.predict(result.split.X_test) == "anomaly"
+    index = list(result.estimator.classes_).index("anomaly")
+    probability = result.estimator.predict_proba(result.split.X_test)[:, index]
+    return {
+        "report": result.report,
+        "positive_class": "anomaly",
+        "prevalence": float(truth.mean()),
+        "precision": float(precision_score(truth, predicted, zero_division=0)),
+        "recall": float(recall_score(truth, predicted, zero_division=0)),
+        "average_precision": float(average_precision_score(truth, probability)),
+    }
