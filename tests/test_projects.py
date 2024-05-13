@@ -56,3 +56,11 @@ def test_transaction_study_uses_anomaly_probability_column():
     assert result["positive_class"] == "anomaly"
     assert 0 < result["prevalence"] < 0.4
     assert 0 <= result["average_precision"] <= 1
+
+
+def test_network_breakdown_covers_protocols():
+    from classification_lab.projects import network_protocol_study
+
+    result = network_protocol_study()
+    assert set(result["breakdown"]) == {"tcp", "udp", "icmp"}
+    assert sum(g["support"] for g in result["breakdown"].values()) == 150

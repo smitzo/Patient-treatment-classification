@@ -116,3 +116,7 @@ def transaction_detection_study(seed=42):
         "recall": float(recall_score(truth, predicted, zero_division=0)),
         "average_precision": float(average_precision_score(truth, probability)),
     }
+
+
+def network_protocol_study(seed=42):
+    return category_error_study("network", "protocol", seed)
