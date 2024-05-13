@@ -64,3 +64,5 @@ LOADERS["digits"] = digits
 LOADERS["churn"] = lambda: load_resource("churn")
 
 LOADERS["equipment"] = lambda: load_resource("equipment")
+
+LOADERS["transactions"] = lambda: load_resource("transactions")

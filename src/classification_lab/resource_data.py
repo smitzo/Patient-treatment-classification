@@ -34,3 +34,11 @@ RESOURCE_SPECS["equipment"] = DatasetSpec(
     ("machine_type",),
     source="Synthetic failure generator; seed 42; 600 rows",
 )
+
+RESOURCE_SPECS["transactions"] = DatasetSpec(
+    "transactions",
+    "label",
+    ("amount", "hour", "recent_count"),
+    ("foreign",),
+    source="Synthetic transaction generator; seed 42; 600 rows; not real financial data",
+)

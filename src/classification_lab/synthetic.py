@@ -90,3 +90,31 @@ def equipment(rows=600, seed=42):
 
 
 GENERATORS["equipment"] = equipment
+
+
+def transactions(rows=600, seed=42):
+    validate_size(rows)
+    rng = np.random.default_rng(seed)
+    amount = rng.lognormal(3.5, 1.2, rows).round(2)
+    hour = rng.integers(0, 24, rows)
+    velocity = rng.poisson(2, rows)
+    foreign = rng.choice(["yes", "no"], rows, p=[0.15, 0.85])
+    score = (
+        -4.8
+        + np.log1p(amount) * 0.4
+        + velocity * 0.35
+        + (foreign == "yes") * 1.5
+        + (hour < 5) * 0.6
+    )
+    return pd.DataFrame(
+        {
+            "amount": amount,
+            "hour": hour,
+            "recent_count": velocity,
+            "foreign": foreign,
+            "label": draw_labels(rng, score, "anomaly", "normal"),
+        }
+    )
+
+
+GENERATORS["transactions"] = transactions
