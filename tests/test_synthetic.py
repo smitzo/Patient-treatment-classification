@@ -36,3 +36,10 @@ def test_transactions_snapshot_is_imbalanced_and_reproducible():
     data = load_dataset("transactions")
     pd.testing.assert_frame_equal(data.frame, generate("transactions"))
     assert 0.02 < (data.y == "anomaly").mean() < 0.4
+
+
+def test_network_snapshot_matches_generator():
+    from classification_lab.datasets import load_dataset
+    from classification_lab.synthetic import generate
+
+    pd.testing.assert_frame_equal(load_dataset("network").frame, generate("network"))

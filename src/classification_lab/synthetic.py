@@ -118,3 +118,31 @@ def transactions(rows=600, seed=42):
 
 
 GENERATORS["transactions"] = transactions
+
+
+def network(rows=600, seed=42):
+    validate_size(rows)
+    rng = np.random.default_rng(seed)
+    packet_bytes = rng.lognormal(6, 0.8, rows).round(2)
+    duration = rng.exponential(20, rows).round(3)
+    failed = rng.poisson(1, rows)
+    protocol = rng.choice(["tcp", "udp", "icmp"], rows)
+    score = (
+        -3.5
+        + failed * 1.1
+        + (packet_bytes > 1000) * 1.2
+        + (duration < 3) * 0.5
+        + (protocol == "icmp") * 0.4
+    )
+    return pd.DataFrame(
+        {
+            "packet_bytes": packet_bytes,
+            "duration": duration,
+            "failed_auth": failed,
+            "protocol": protocol,
+            "label": draw_labels(rng, score, "intrusion", "normal"),
+        }
+    )
+
+
+GENERATORS["network"] = network

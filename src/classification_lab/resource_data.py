@@ -42,3 +42,11 @@ RESOURCE_SPECS["transactions"] = DatasetSpec(
     ("foreign",),
     source="Synthetic transaction generator; seed 42; 600 rows; not real financial data",
 )
+
+RESOURCE_SPECS["network"] = DatasetSpec(
+    "network",
+    "label",
+    ("packet_bytes", "duration", "failed_auth"),
+    ("protocol",),
+    source="Synthetic connection generator; seed 42; 600 rows; no captured traffic",
+)
