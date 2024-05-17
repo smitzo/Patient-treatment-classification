@@ -1,11 +1,15 @@
-"""Bounded deterministic model factories."""
+"""Bounded deterministic factories for text and tabular classification."""
 
+from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
+from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from .preprocessing import tabular_preprocessor
 
-MODEL_NAMES = ["logistic", "forest"]
+
+MODEL_NAMES = ["logistic", "forest", "dummy"]
 
 
 def build_pipeline(spec, model: str = "logistic", seed: int = 42):
@@ -14,29 +18,14 @@ def build_pipeline(spec, model: str = "logistic", seed: int = 42):
         "forest": lambda: RandomForestClassifier(
             n_estimators=100, min_samples_leaf=2, random_state=seed, n_jobs=1
         ),
+        "dummy": lambda: DummyClassifier(strategy="most_frequent", random_state=seed),
     }
     if model not in factories:
-        raise ValueError(f"Unknown model {model!r}")
-    return Pipeline([("preprocess", tabular_preprocessor(spec)), ("model", factories[model]())])
-
-
-# A baseline uses the same preprocessing and split contract as learned models.
-def build_dummy_pipeline(spec, seed: int = 42):
-    from sklearn.dummy import DummyClassifier
-
-    return Pipeline(
-        [
-            ("preprocess", tabular_preprocessor(spec)),
-            ("model", DummyClassifier(strategy="most_frequent", random_state=seed)),
-        ]
-    )
-
-
-MODEL_NAMES.append("dummy")
-_original_build_pipeline = build_pipeline
-
-
-def build_pipeline(spec, model: str = "logistic", seed: int = 42):
-    if model == "dummy":
-        return build_dummy_pipeline(spec, seed)
-    return _original_build_pipeline(spec, model, seed)
+        raise ValueError(f"Unknown model {model!r}; choose from {MODEL_NAMES}")
+    if spec.text:
+        preprocessor = ColumnTransformer(
+            [("text", TfidfVectorizer(ngram_range=(1, 2), max_features=10000), spec.text)]
+        )
+    else:
+        preprocessor = tabular_preprocessor(spec)
+    return Pipeline([("preprocess", preprocessor), ("model", factories[model]())])
