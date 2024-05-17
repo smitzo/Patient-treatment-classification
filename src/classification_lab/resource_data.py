@@ -50,3 +50,11 @@ RESOURCE_SPECS["network"] = DatasetSpec(
     ("protocol",),
     source="Synthetic connection generator; seed 42; 600 rows; no captured traffic",
 )
+
+RESOURCE_SPECS["spam"] = DatasetSpec(
+    "spam",
+    "label",
+    text="message",
+    kind="text",
+    source="Authored template corpus; 128 toy messages; not collected communications",
+)
