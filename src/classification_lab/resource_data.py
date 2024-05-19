@@ -58,3 +58,11 @@ RESOURCE_SPECS["spam"] = DatasetSpec(
     kind="text",
     source="Authored template corpus; 128 toy messages; not collected communications",
 )
+
+RESOURCE_SPECS["sentiment"] = DatasetSpec(
+    "sentiment",
+    "label",
+    text="message",
+    kind="text",
+    source="Authored template corpus; 128 toy reviews; not customer feedback",
+)

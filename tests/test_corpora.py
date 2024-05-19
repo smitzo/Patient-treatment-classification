@@ -20,3 +20,11 @@ def test_text_bundle_excludes_label_and_rejects_blank_text():
     data.frame.loc[0, "message"] = "   "
     with pytest.raises(ValueError, match="nonempty"):
         validate_bundle(data)
+
+
+def test_sentiment_corpus_has_both_balanced_classes():
+    from classification_lab.datasets import load_dataset
+
+    data = load_dataset("sentiment")
+    assert data.y.value_counts().to_dict() == {"positive": 64, "negative": 64}
+    assert not data.frame.message.duplicated().any()
