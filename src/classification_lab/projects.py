@@ -120,3 +120,22 @@ def transaction_detection_study(seed=42):
 
 def network_protocol_study(seed=42):
     return category_error_study("network", "protocol", seed)
+
+
+def text_term_study(dataset="spam", seed=42, top=10):
+    data = load_dataset(dataset)
+    if not data.spec.text:
+        raise ValueError("Term study requires text data")
+    result = train(data, seed=seed)
+    transformer = result.estimator.named_steps["preprocess"].named_transformers_["text"]
+    model = result.estimator.named_steps["model"]
+    terms = transformer.get_feature_names_out()
+    coefficient = model.coef_[0]
+    order = coefficient.argsort()
+    return {
+        "report": result.report,
+        "coefficient_positive_class": str(model.classes_[1]),
+        "positive_terms": [str(terms[i]) for i in order[-top:][::-1]],
+        "negative_terms": [str(terms[i]) for i in order[:top]],
+        "scope": "template corpus; coefficient associations are descriptive",
+    }

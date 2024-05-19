@@ -17,3 +17,12 @@ def test_text_vocabulary_is_training_only():
 def test_text_holdout_supports_multistep_pipeline():
     result = train(load_dataset("spam"))
     assert result.report["metrics"]["accuracy"] >= 0.5
+
+
+def test_spam_terms_name_coefficient_direction():
+    from classification_lab.projects import text_term_study
+
+    study = text_term_study()
+    assert study["coefficient_positive_class"] == "spam"
+    assert len(study["positive_terms"]) == 10
+    assert set(study["positive_terms"]).isdisjoint(study["negative_terms"])
