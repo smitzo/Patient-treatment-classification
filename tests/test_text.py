@@ -26,3 +26,12 @@ def test_spam_terms_name_coefficient_direction():
     assert study["coefficient_positive_class"] == "spam"
     assert len(study["positive_terms"]) == 10
     assert set(study["positive_terms"]).isdisjoint(study["negative_terms"])
+
+
+def test_sentiment_polarity_preserves_positive_label():
+    from classification_lab.projects import sentiment_polarity_study
+
+    study = sentiment_polarity_study()
+    assert study["coefficient_positive_class"] == "positive"
+    assert "neutral" in study["unsupported_cases"]
+    assert study["report"]["test_rows"] == 32

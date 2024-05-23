@@ -139,3 +139,9 @@ def text_term_study(dataset="spam", seed=42, top=10):
         "negative_terms": [str(terms[i]) for i in order[:top]],
         "scope": "template corpus; coefficient associations are descriptive",
     }
+
+
+def sentiment_polarity_study(seed=42):
+    result = text_term_study("sentiment", seed)
+    result["unsupported_cases"] = ["neutral", "sarcasm", "multilingual", "mixed sentiment"]
+    return result
