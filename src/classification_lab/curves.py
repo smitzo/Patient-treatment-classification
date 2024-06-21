@@ -1,6 +1,7 @@
 """Binary probability diagnostics with an explicit positive class."""
 
 import numpy as np
+from .probabilities import validate_probabilities
 from sklearn.metrics import (
     average_precision_score,
     precision_recall_curve,
@@ -11,7 +12,7 @@ from sklearn.metrics import (
 
 def binary_curves(y_true, probabilities, classes, positive):
     classes = list(classes)
-    probabilities = np.asarray(probabilities, dtype=float)
+    probabilities = validate_probabilities(probabilities, classes, rows=len(y_true))
     if len(classes) != 2 or positive not in classes:
         raise ValueError("Binary curves need two classes and a declared positive label")
     if probabilities.shape != (len(y_true), 2) or not np.isfinite(probabilities).all():
