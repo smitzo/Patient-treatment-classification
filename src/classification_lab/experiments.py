@@ -1,6 +1,7 @@
 """Shared experiment path for scripts and command-line tools."""
 
 from dataclasses import dataclass
+from .leakage import split_overlap
 from .metrics import classification_metrics
 from .models import build_pipeline
 from .splitting import Split, holdout
@@ -31,4 +32,5 @@ def train(data, model="logistic", seed=42, test_size=0.25):
         "metrics": metrics,
         "evaluation": "single stratified holdout; educational, not external validation",
     }
+    report["split_overlap"] = split_overlap(split.X_train, split.X_test)
     return Experiment(estimator, report, split)
