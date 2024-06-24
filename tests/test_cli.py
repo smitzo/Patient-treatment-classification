@@ -15,3 +15,19 @@ def test_invalid_dataset_exits_cleanly(capsys):
         main(["train", "missing"])
     assert error.value.code == 2
     assert "Unknown dataset" in capsys.readouterr().err
+
+
+def test_prediction_cli_requires_trust_then_roundtrips(tmp_path, capsys):
+    from classification_lab.datasets import load_dataset
+
+    artifact = tmp_path / "model.pkl"
+    main(["train", "iris", "--artifact", str(artifact)])
+    capsys.readouterr()
+    features = tmp_path / "features.csv"
+    load_dataset("iris").X.iloc[:5].to_csv(features, index=False)
+    output = tmp_path / "predictions.csv"
+    command = ["predict", str(artifact), str(features), "--output-csv", str(output)]
+    with pytest.raises(SystemExit):
+        main(command)
+    main(command + ["--trust-artifact"])
+    assert len(output.read_text().splitlines()) == 6
