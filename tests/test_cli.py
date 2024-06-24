@@ -31,3 +31,10 @@ def test_prediction_cli_requires_trust_then_roundtrips(tmp_path, capsys):
         main(command)
     main(command + ["--trust-artifact"])
     assert len(output.read_text().splitlines()) == 6
+
+
+def test_dataset_listing_includes_text_and_tabular(capsys):
+    main(["datasets"])
+    rows = json.loads(capsys.readouterr().out)["datasets"]
+    assert len(rows) == 11
+    assert {r["kind"] for r in rows} == {"tabular", "text"}

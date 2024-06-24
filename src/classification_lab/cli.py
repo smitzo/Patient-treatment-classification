@@ -7,6 +7,7 @@ from .experiments import train
 from .reporting import write_json
 from .artifacts import save_artifact
 from .commands import predict_command
+from .commands import list_command
 
 
 REGISTRARS = [predict_command.register]
@@ -49,3 +50,6 @@ def main(argv=None):
         return 0
     except (ValueError, OSError, TypeError) as error:
         root.error(str(error))
+
+
+REGISTRARS.append(list_command.register)
