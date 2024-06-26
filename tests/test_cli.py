@@ -38,3 +38,10 @@ def test_dataset_listing_includes_text_and_tabular(capsys):
     rows = json.loads(capsys.readouterr().out)["datasets"]
     assert len(rows) == 11
     assert {r["kind"] for r in rows} == {"tabular", "text"}
+
+
+def test_validation_cli_counts_real_patient_records(capsys):
+    main(["validate", "patient"])
+    report = json.loads(capsys.readouterr().out)
+    assert report["rows"] == 4412
+    assert sum(report["classes"].values()) == 4412

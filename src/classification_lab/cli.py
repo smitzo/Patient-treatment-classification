@@ -8,6 +8,7 @@ from .reporting import write_json
 from .artifacts import save_artifact
 from .commands import predict_command
 from .commands import list_command
+from .commands import validate_command
 
 
 REGISTRARS = [predict_command.register]
@@ -53,3 +54,6 @@ def main(argv=None):
 
 
 REGISTRARS.append(list_command.register)
+
+
+REGISTRARS.append(validate_command.register)
