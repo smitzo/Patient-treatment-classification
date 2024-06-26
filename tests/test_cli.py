@@ -45,3 +45,10 @@ def test_validation_cli_counts_real_patient_records(capsys):
     report = json.loads(capsys.readouterr().out)
     assert report["rows"] == 4412
     assert sum(report["classes"].values()) == 4412
+
+
+def test_comparison_cli_records_selection_metric(capsys):
+    main(["compare", "iris", "--models", "dummy", "logistic"])
+    report = json.loads(capsys.readouterr().out)
+    assert report["selection_metric"] == "macro_f1"
+    assert len(report["results"]) == 2

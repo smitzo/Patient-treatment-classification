@@ -9,6 +9,7 @@ from .artifacts import save_artifact
 from .commands import predict_command
 from .commands import list_command
 from .commands import validate_command
+from .commands import compare_command
 
 
 REGISTRARS = [predict_command.register]
@@ -57,3 +58,6 @@ REGISTRARS.append(list_command.register)
 
 
 REGISTRARS.append(validate_command.register)
+
+
+REGISTRARS.append(compare_command.register)
