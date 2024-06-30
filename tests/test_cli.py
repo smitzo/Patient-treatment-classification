@@ -52,3 +52,10 @@ def test_comparison_cli_records_selection_metric(capsys):
     report = json.loads(capsys.readouterr().out)
     assert report["selection_metric"] == "macro_f1"
     assert len(report["results"]) == 2
+
+
+def test_tune_cli_records_training_selection(capsys):
+    main(["tune", "iris"])
+    report = json.loads(capsys.readouterr().out)
+    assert "best_params" in report
+    assert "reserved holdout" in report["evaluation"]
