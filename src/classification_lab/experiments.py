@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from .fingerprints import dataset_fingerprint
 from .leakage import split_overlap
+from .manifests import reproducibility_manifest
 from .metrics import classification_metrics
 from .models import build_pipeline
 from .splitting import Split, holdout
@@ -34,4 +35,5 @@ def train(data, model="logistic", seed=42, test_size=0.25):
         "split_overlap": split_overlap(split.X_train, split.X_test),
         "evaluation": "single stratified holdout; educational, not external validation",
     }
+    report["reproducibility"] = reproducibility_manifest(data, split, seed)
     return Experiment(estimator, report, split)

@@ -2,6 +2,7 @@
 
 from sklearn.model_selection import GridSearchCV
 from .experiments import Experiment
+from .manifests import reproducibility_manifest
 from .metrics import classification_metrics
 from .models import build_pipeline
 from .splitting import holdout
@@ -42,4 +43,5 @@ def tune(data, model="logistic", folds=3, seed=42, test_size=0.25):
         ),
         "evaluation": "training-only grid search, single reserved holdout",
     }
+    report["reproducibility"] = reproducibility_manifest(data, split, seed)
     return Experiment(estimator, report, split)
