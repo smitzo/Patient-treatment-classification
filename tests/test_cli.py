@@ -59,3 +59,13 @@ def test_tune_cli_records_training_selection(capsys):
     report = json.loads(capsys.readouterr().out)
     assert "best_params" in report
     assert "reserved holdout" in report["evaluation"]
+
+
+def test_generation_cli_matches_requested_size_and_seed(tmp_path, capsys):
+    import pandas as pd
+
+    output = tmp_path / "toy.csv"
+    main(["generate", "churn", "--rows", "80", "--seed", "9", "--output-csv", str(output)])
+    report = json.loads(capsys.readouterr().out)
+    assert report["kind"] == "synthetic" and report["seed"] == 9
+    assert len(pd.read_csv(output)) == 80
