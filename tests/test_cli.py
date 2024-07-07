@@ -69,3 +69,12 @@ def test_generation_cli_matches_requested_size_and_seed(tmp_path, capsys):
     report = json.loads(capsys.readouterr().out)
     assert report["kind"] == "synthetic" and report["seed"] == 9
     assert len(pd.read_csv(output)) == 80
+
+
+def test_evaluate_cli_uses_explicit_class_order(tmp_path, capsys):
+    path = tmp_path / "labels.csv"
+    path.write_text("truth,prediction\na,a\nb,a\n")
+    main(["evaluate", str(path), "--classes", "b", "a"])
+    report = json.loads(capsys.readouterr().out)
+    assert report["metrics"]["classes"] == ["b", "a"]
+    assert report["metrics"]["accuracy"] == 0.5

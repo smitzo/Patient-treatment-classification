@@ -12,6 +12,7 @@ from .commands import validate_command
 from .commands import compare_command
 from .commands import tune_command
 from .commands import generate_command
+from .commands import evaluate_command
 
 
 REGISTRARS = [predict_command.register]
@@ -69,3 +70,6 @@ REGISTRARS.append(tune_command.register)
 
 
 REGISTRARS.append(generate_command.register)
+
+
+REGISTRARS.append(evaluate_command.register)
