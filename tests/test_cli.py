@@ -78,3 +78,13 @@ def test_evaluate_cli_uses_explicit_class_order(tmp_path, capsys):
     report = json.loads(capsys.readouterr().out)
     assert report["metrics"]["classes"] == ["b", "a"]
     assert report["metrics"]["accuracy"] == 0.5
+
+
+def test_inspect_cli_does_not_open_model(tmp_path, capsys):
+    path = tmp_path / "dangerous.pkl"
+    path.write_bytes(b"not a pickle")
+    path.with_suffix(".pkl.json").write_text(
+        json.dumps({"format_version": 1, "description": "metadata only"})
+    )
+    main(["inspect", str(path)])
+    assert "model not opened" in json.loads(capsys.readouterr().out)["scope"]
