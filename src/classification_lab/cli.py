@@ -14,6 +14,7 @@ from .commands import tune_command
 from .commands import generate_command
 from .commands import evaluate_command
 from .commands import inspect_command
+from .commands import leaderboard_command
 
 
 REGISTRARS = [predict_command.register]
@@ -77,3 +78,6 @@ REGISTRARS.append(evaluate_command.register)
 
 
 REGISTRARS.append(inspect_command.register)
+
+
+REGISTRARS.append(leaderboard_command.register)
