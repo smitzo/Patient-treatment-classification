@@ -71,3 +71,17 @@ def probability_curve_plot(curves, path):
     )
     pr_axis.legend()
     return save_figure(figure, path)
+
+
+def importance_plot(rows, path, limit=20):
+    if not rows or limit < 1:
+        raise ValueError("Need importance rows and a positive feature limit")
+    rows = sorted(rows, key=lambda row: row["mean"], reverse=True)[:limit][::-1]
+    figure = Figure(figsize=(8, max(3, len(rows) * 0.35)))
+    axis = figure.subplots()
+    axis.barh(
+        [r["feature"] for r in rows], [r["mean"] for r in rows], xerr=[r["std"] for r in rows]
+    )
+    axis.axvline(0, color="gray", linewidth=1)
+    axis.set(xlabel="Decrease in heldout balanced accuracy", title="Permutation importance")
+    return save_figure(figure, path)
