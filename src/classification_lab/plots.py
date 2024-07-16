@@ -50,3 +50,24 @@ def confusion_plot(metrics, path, normalize=False):
                 va="center",
             )
     return save_figure(figure, path)
+
+
+def probability_curve_plot(curves, path):
+    figure = Figure(figsize=(10, 4))
+    roc_axis, pr_axis = figure.subplots(1, 2)
+    roc = curves["roc"]
+    roc_axis.plot(roc["fpr"], roc["tpr"], label=f"AUC {curves['roc_auc']:.3f}")
+    roc_axis.plot([0, 1], [0, 1], "--", color="gray")
+    roc_axis.set(
+        xlabel="False positive rate",
+        ylabel="True positive rate",
+        title=f"ROC: {curves['positive_class']}",
+    )
+    roc_axis.legend()
+    pr = curves["precision_recall"]
+    pr_axis.plot(pr["recall"], pr["precision"], label=f"AP {curves['average_precision']:.3f}")
+    pr_axis.set(
+        xlabel="Recall", ylabel="Precision", title="Precision-recall", xlim=(0, 1), ylim=(0, 1.05)
+    )
+    pr_axis.legend()
+    return save_figure(figure, path)
