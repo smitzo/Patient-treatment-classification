@@ -88,3 +88,14 @@ def test_inspect_cli_does_not_open_model(tmp_path, capsys):
     )
     main(["inspect", str(path)])
     assert "model not opened" in json.loads(capsys.readouterr().out)["scope"]
+
+
+def test_report_cli_exports_html_and_image(tmp_path, capsys):
+    source = tmp_path / "report.json"
+    html = tmp_path / "report.html"
+    image = tmp_path / "matrix.png"
+    main(["train", "iris", "--output", str(source)])
+    main(["report", str(source), "--html", str(html), "--confusion-plot", str(image)])
+    capsys.readouterr()
+    assert "Holdout metrics" in html.read_text()
+    assert image.read_bytes().startswith(b"\x89PNG")
