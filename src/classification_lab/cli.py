@@ -16,6 +16,7 @@ from .commands import evaluate_command
 from .commands import inspect_command
 from .commands import leaderboard_command
 from .commands import report_command
+from .commands import batch_command
 
 
 REGISTRARS = [predict_command.register]
@@ -85,3 +86,6 @@ REGISTRARS.append(leaderboard_command.register)
 
 
 REGISTRARS.append(report_command.register)
+
+
+REGISTRARS.append(batch_command.register)
