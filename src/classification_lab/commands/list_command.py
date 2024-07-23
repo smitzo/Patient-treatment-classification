@@ -1,3 +1,4 @@
+from ..catalog import dataset_catalog
 from ..datasets import LOADERS, load_dataset
 
 
@@ -17,8 +18,10 @@ def execute(args):
         else:
             data = load_dataset(name)
             spec, rows = data.spec, len(data.frame)
+        metadata = next(item for item in dataset_catalog()["datasets"] if item["name"] == name)
         result.append(
             {
+                **metadata,
                 "name": name,
                 "kind": spec.kind,
                 "features": list(spec.features),

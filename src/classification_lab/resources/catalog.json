@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "datasets": [
+    {
+      "name": "patient",
+      "rows": 4412,
+      "origin": "existing patient data",
+      "task": "Recorded in/out care source",
+      "license_status": "See upstream terms; no relicensing asserted",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness",
+      "file_sha256": "4c57d5058d024384786c41df58b9953658bb5c5ac03051d5dbff7d6cfd3e053a"
+    },
+    {
+      "name": "iris",
+      "rows": 150,
+      "origin": "scikit-learn bundled benchmark",
+      "task": "Flower species",
+      "license_status": "See upstream terms; no relicensing asserted",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness"
+    },
+    {
+      "name": "wine",
+      "rows": 178,
+      "origin": "scikit-learn bundled benchmark",
+      "task": "Wine cultivar",
+      "license_status": "See upstream terms; no relicensing asserted",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness"
+    },
+    {
+      "name": "breast_cancer",
+      "rows": 569,
+      "origin": "scikit-learn bundled benchmark",
+      "task": "Malignant/benign benchmark",
+      "license_status": "See upstream terms; no relicensing asserted",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness"
+    },
+    {
+      "name": "digits",
+      "rows": 1797,
+      "origin": "scikit-learn bundled benchmark",
+      "task": "Handwritten digit",
+      "license_status": "See upstream terms; no relicensing asserted",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness"
+    },
+    {
+      "name": "churn",
+      "rows": 600,
+      "origin": "synthetic generator",
+      "task": "Customer churn",
+      "license_status": "CC0-1.0 for original synthetic and authored example data",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness",
+      "file_sha256": "49526cdd0715565dfea861d7eeb0a8c260e14b204c3e7b08b36c1d24d2a083d8",
+      "generation_seed": 42
+    },
+    {
+      "name": "equipment",
+      "rows": 600,
+      "origin": "synthetic generator",
+      "task": "Machine failure",
+      "license_status": "CC0-1.0 for original synthetic and authored example data",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness",
+      "file_sha256": "3ddb5b13da335f4252ff786334d4cae690534ae983458aea6b6ab0d84dace2c3",
+      "generation_seed": 42
+    },
+    {
+      "name": "transactions",
+      "rows": 600,
+      "origin": "synthetic generator",
+      "task": "Transaction anomaly",
+      "license_status": "CC0-1.0 for original synthetic and authored example data",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness",
+      "file_sha256": "80afe50bcdf47c0d0d20907178bc4e6da38b60cc7abc975933dc39961a5c5786",
+      "generation_seed": 42
+    },
+    {
+      "name": "network",
+      "rows": 600,
+      "origin": "synthetic generator",
+      "task": "Connection intrusion",
+      "license_status": "CC0-1.0 for original synthetic and authored example data",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness",
+      "file_sha256": "48471fe400bb0d2fe4068436f54b4b3ebb73af827fa73d9db9bee28befa6fd55",
+      "generation_seed": 42
+    },
+    {
+      "name": "spam",
+      "rows": 128,
+      "origin": "authored template corpus",
+      "task": "Spam/ham messages",
+      "license_status": "CC0-1.0 for original synthetic and authored example data",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness",
+      "file_sha256": "60cdd0dea97b8873de55fdb5bcc7fcda5d99074af29484cd78d4bf0f681bdd54"
+    },
+    {
+      "name": "sentiment",
+      "rows": 128,
+      "origin": "authored template corpus",
+      "task": "Positive/negative toy reviews",
+      "license_status": "CC0-1.0 for original synthetic and authored example data",
+      "limitations": "Educational data; holdout scores do not establish deployment readiness",
+      "file_sha256": "4e0e6f09a98dbd29a088cecd7b6658e56da790fcdd5ad409743a20215d60048c"
+    }
+  ]
+}
