@@ -9,3 +9,7 @@ Do not infer these from this repository. No new real patient data is added.
 `patient.schema.json` records the columns actually observed in the existing file. Numeric missing
 values are permitted for training-fold imputation; targets cannot be missing. Recorded SEX values
 are F/M; these describe the source schema and do not establish completeness of demographic coverage.
+
+New toy dataset sources, sizes and limitations are documented in [data provenance](../docs/data-provenance.md).
+The six new CSV datasets are packaged under `src/classification_lab/resources/`. Benchmark datasets
+load from the installed scikit-learn distribution. See [text corpora](text-corpora.md) for authorship.
