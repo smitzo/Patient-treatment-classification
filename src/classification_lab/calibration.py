@@ -3,6 +3,8 @@
 from sklearn.calibration import CalibratedClassifierCV
 from .experiments import Experiment
 from .models import build_pipeline
+from .manifests import reproducibility_manifest
+from .leakage import split_overlap
 from .metrics import classification_metrics
 from .splitting import holdout
 from .validation import stratified_cv
@@ -32,4 +34,6 @@ def train_calibrated(data, model="logistic", method="sigmoid", folds=3, seed=42)
         ),
         "evaluation": "training-fold calibration, reserved holdout",
     }
+    report["reproducibility"] = reproducibility_manifest(data, split, seed)
+    report["split_overlap"] = split_overlap(split.X_train, split.X_test)
     return Experiment(estimator, report, split)

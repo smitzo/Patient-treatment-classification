@@ -1,7 +1,6 @@
-import csv
 from pathlib import Path
-import pandas as pd
 from ..artifacts import load_artifact
+from ..csv_io import read_checked_csv
 from ..prediction import predict_frame
 
 
@@ -18,11 +17,10 @@ def register(commands):
 
 def execute(args):
     artifact = load_artifact(args.artifact, trusted=args.trust_artifact)
-    with Path(args.csv).open(newline="", encoding="utf-8-sig") as stream:
-        header = next(csv.reader(stream), [])
-    if len(header) != len(set(header)):
-        raise ValueError("Duplicate prediction CSV columns")
-    frame = pd.read_csv(args.csv)
+    dtype = {column: str for column in artifact.spec.categorical}
+    if artifact.spec.text:
+        dtype[artifact.spec.text] = str
+    frame = read_checked_csv(args.csv, dtype=dtype)
     predictions = predict_frame(artifact, frame)
     path = Path(args.output_csv)
     path.parent.mkdir(parents=True, exist_ok=True)

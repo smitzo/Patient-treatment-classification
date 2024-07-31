@@ -11,7 +11,7 @@ The loader refuses all inputs unless the caller explicitly sets `trusted=True`; 
 or make an artifact safe. Obtain artifacts only through a trusted local workflow.
 
 After deserialization, the loader checks the format and exact scikit-learn version, reconstructs
-the dataset specification and compares declared classes with estimator classes. Use matching
+the dataset specification and compares declared classes and ordered features with the fitted estimator. Use matching
 Python and dependency environments; this format is not a stable cross-version interchange
 protocol. Compatibility checks cannot undo code that ran during unpickling.
 

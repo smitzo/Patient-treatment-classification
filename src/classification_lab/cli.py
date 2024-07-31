@@ -19,7 +19,19 @@ from .commands import report_command
 from .commands import batch_command
 
 
-REGISTRARS = [predict_command.register]
+REGISTRARS = [
+    predict_command.register,
+    list_command.register,
+    validate_command.register,
+    compare_command.register,
+    tune_command.register,
+    generate_command.register,
+    evaluate_command.register,
+    inspect_command.register,
+    leaderboard_command.register,
+    report_command.register,
+    batch_command.register,
+]
 
 
 def train_command(args):
@@ -57,35 +69,5 @@ def main(argv=None):
             write_json(args.output, report)
         print(json.dumps(report, allow_nan=False))
         return 0
-    except (ValueError, OSError, TypeError) as error:
+    except (ValueError, OSError, TypeError, KeyError) as error:
         root.error(str(error))
-
-
-REGISTRARS.append(list_command.register)
-
-
-REGISTRARS.append(validate_command.register)
-
-
-REGISTRARS.append(compare_command.register)
-
-
-REGISTRARS.append(tune_command.register)
-
-
-REGISTRARS.append(generate_command.register)
-
-
-REGISTRARS.append(evaluate_command.register)
-
-
-REGISTRARS.append(inspect_command.register)
-
-
-REGISTRARS.append(leaderboard_command.register)
-
-
-REGISTRARS.append(report_command.register)
-
-
-REGISTRARS.append(batch_command.register)

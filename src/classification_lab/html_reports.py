@@ -1,6 +1,7 @@
 """Static HTML with escaped user-controlled labels and no executable model content."""
 
 from html import escape
+from .report_contracts import validate_report
 import json
 from pathlib import Path
 
@@ -8,6 +9,7 @@ from pathlib import Path
 def render_html(report):
     if not isinstance(report, dict) or report.get("schema_version") != 1 or "metrics" not in report:
         raise ValueError("Expected a version-one experiment report")
+    validate_report(report)
     metrics = report["metrics"]
     title = escape(f"{report['dataset']} / {report['model']}")
     rows = "".join(

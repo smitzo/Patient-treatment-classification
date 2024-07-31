@@ -1,4 +1,4 @@
-import pandas as pd
+from ..csv_io import read_checked_csv
 from ..metrics import classification_metrics
 
 
@@ -17,7 +17,7 @@ def register(commands):
 
 
 def execute(args):
-    frame = pd.read_csv(args.csv, dtype=str)
+    frame = read_checked_csv(args.csv, dtype=str)
     if args.truth not in frame or args.prediction not in frame:
         raise ValueError("CSV must contain the requested truth and prediction columns")
     if frame[[args.truth, args.prediction]].isna().any().any() or len(set(args.classes)) != len(

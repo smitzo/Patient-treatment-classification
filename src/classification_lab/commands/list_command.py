@@ -14,7 +14,14 @@ def execute(args):
         if name == "patient":
             from ..datasets import PATIENT
 
-            spec, rows = PATIENT, None
+            spec, rows = (
+                PATIENT,
+                next(
+                    item["rows"]
+                    for item in dataset_catalog()["datasets"]
+                    if item["name"] == "patient"
+                ),
+            )
         else:
             data = load_dataset(name)
             spec, rows = data.spec, len(data.frame)

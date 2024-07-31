@@ -40,35 +40,20 @@ def load_patient(path: str | Path = "patient_data.csv"):
     return data
 
 
-LOADERS = {"patient": load_patient}
+LOADERS = {
+    "patient": load_patient,
+    "iris": iris,
+    "wine": wine,
+    "breast_cancer": breast_cancer,
+    "digits": digits,
+    **{
+        name: (lambda name=name: load_resource(name))
+        for name in ("churn", "equipment", "transactions", "network", "spam", "sentiment")
+    },
+}
 
 
 def load_dataset(name: str, **kwargs):
     if name not in LOADERS:
         raise ValueError(f"Unknown dataset {name!r}; choose from {sorted(LOADERS)}")
     return LOADERS[name](**kwargs)
-
-
-LOADERS["iris"] = iris
-
-
-LOADERS["wine"] = wine
-
-
-LOADERS["breast_cancer"] = breast_cancer
-
-
-LOADERS["digits"] = digits
-
-
-LOADERS["churn"] = lambda: load_resource("churn")
-
-LOADERS["equipment"] = lambda: load_resource("equipment")
-
-LOADERS["transactions"] = lambda: load_resource("transactions")
-
-LOADERS["network"] = lambda: load_resource("network")
-
-LOADERS["spam"] = lambda: load_resource("spam")
-
-LOADERS["sentiment"] = lambda: load_resource("sentiment")

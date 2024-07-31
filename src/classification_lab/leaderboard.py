@@ -1,6 +1,7 @@
 """Reject score comparisons across datasets or holdout populations."""
 
 import json
+from .report_contracts import validate_report
 from pathlib import Path
 
 
@@ -10,6 +11,7 @@ def leaderboard(paths, metric="macro_f1"):
     reports = [json.loads(Path(path).read_text()) for path in paths]
     signatures = set()
     for report in reports:
+        validate_report(report)
         manifest = report.get("reproducibility", {})
         required = (manifest.get("dataset_fingerprint"), manifest.get("test_index_fingerprint"))
         if not all(required):

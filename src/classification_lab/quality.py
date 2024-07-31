@@ -2,17 +2,28 @@
 
 import numpy as np
 import pandas as pd
+from sklearn.utils.multiclass import type_of_target
 from .data import DatasetBundle
 
 
 def validate_bundle(data: DatasetBundle) -> dict:
     spec, frame = data.spec, data.frame
-    if set(frame.columns) != set(spec.features + (spec.target,)) or frame.empty:
+    if (
+        not frame.columns.is_unique
+        or set(frame.columns) != set(spec.features + (spec.target,))
+        or frame.empty
+    ):
         raise ValueError("Dataset does not match its schema")
     if not frame.index.is_unique:
         raise ValueError("Dataset index must be unique")
     if frame[spec.target].isna().any() or frame[spec.target].nunique() < 2:
         raise ValueError("Targets must be present with at least two classes")
+    try:
+        target_kind = type_of_target(frame[spec.target])
+    except TypeError as error:
+        raise ValueError("Targets must use consistent discrete labels") from error
+    if target_kind not in ("binary", "multiclass"):
+        raise ValueError("Targets must be discrete classification labels")
     for column in spec.numeric:
         series = frame[column]
         if not pd.api.types.is_numeric_dtype(series) or np.isinf(series.to_numpy(float)).any():

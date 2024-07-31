@@ -32,3 +32,8 @@ written after the whole batch succeeds.
 Static HTML escapes labels and JSON text. Matplotlib creates noninteractive figures and clears
 them after saving. Reports and artifacts are local ignored outputs. Pickle models are executable
 inputs and require explicit trust; the JSON inspection command never opens the model file.
+
+CSV ingestion validates record widths before pandas parsing, preventing accidental implicit
+indexes. Nullable pandas scalars and Python None are normalized inside each preprocessing fold.
+Report readers validate score ranges and confusion counts before rendering or ranking inputs.
+Per-class metric keys are kept separate from aggregate metric names to avoid label collisions.

@@ -29,6 +29,7 @@ def save_artifact(experiment, spec, path):
         "sklearn_version": sklearn.__version__,
         "report": experiment.report,
     }
+    validate_estimator(experiment.estimator, spec, metadata["classes"])
     payload = {"metadata": metadata, "estimator": experiment.estimator}
     temporary = None
     try:
@@ -45,24 +46,49 @@ def save_artifact(experiment, spec, path):
     return path
 
 
+def validate_estimator(estimator, spec, classes):
+    if (
+        not isinstance(classes, list)
+        or len(classes) < 2
+        or not all(isinstance(c, str) for c in classes)
+        or len(set(classes)) != len(classes)
+    ):
+        raise ValueError("Artifact needs distinct declared string classes")
+    try:
+        actual_classes = [str(c) for c in estimator.classes_]
+        actual_features = list(estimator.feature_names_in_)
+    except AttributeError as error:
+        raise ValueError("Artifact needs a fitted estimator with named features") from error
+    if (
+        not callable(getattr(estimator, "predict_proba", None))
+        or actual_classes != classes
+        or actual_features != list(spec.features)
+    ):
+        raise ValueError("Artifact estimator does not match declared classes or feature schema")
+
+
 def load_artifact(path, *, trusted=False):
     if not trusted:
         raise ValueError("Refusing pickle input; explicitly trust this artifact before loading")
-    with Path(path).open("rb") as stream:
-        payload = pickle.load(stream)
+    try:
+        with Path(path).open("rb") as stream:
+            payload = pickle.load(stream)
+    except (pickle.UnpicklingError, EOFError) as error:
+        raise ValueError("Unreadable trusted model artifact") from error
     if not isinstance(payload, dict) or not {"metadata", "estimator"} <= payload.keys():
         raise ValueError("Malformed model artifact")
     metadata, estimator = payload["metadata"], payload["estimator"]
     if (
-        metadata.get("format_version") != 1
+        not isinstance(metadata, dict)
+        or metadata.get("format_version") != 1
         or metadata.get("sklearn_version") != sklearn.__version__
     ):
         raise ValueError("Unsupported artifact format or scikit-learn version")
-    raw = dict(metadata["dataset_spec"])
-    raw["numeric"], raw["categorical"] = tuple(raw["numeric"]), tuple(raw["categorical"])
-    spec = DatasetSpec(**raw)
-    if not hasattr(estimator, "predict_proba") or metadata["classes"] != [
-        str(c) for c in estimator.classes_
-    ]:
-        raise ValueError("Artifact estimator does not match declared classes")
+    try:
+        raw = dict(metadata["dataset_spec"])
+        raw["numeric"], raw["categorical"] = tuple(raw["numeric"]), tuple(raw["categorical"])
+        spec = DatasetSpec(**raw)
+        validate_estimator(estimator, spec, metadata["classes"])
+    except (KeyError, TypeError) as error:
+        raise ValueError("Malformed artifact schema metadata") from error
     return ModelArtifact(estimator, spec, metadata)
